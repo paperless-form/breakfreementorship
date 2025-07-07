@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How Bad Is It, Really? | BreakFree Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --secondary: #1e293b;
+      --accent: #3b82f6;
+      --accent-light: #60a5fa;
+      --cta: #f59e0b;
+      --cta-hover: #d97706;
+      --text: #f8fafc;
+      --text-muted: #cbd5e1;
+      --success: #10b981;
+      --card: rgba(30, 41, 59, 0.8);
+      --glass: rgba(255, 255, 255, 0.1);
+    }
+    
+    * { 
+      box-sizing: border-box; 
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--primary);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Hero Section with Banner */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9)), 
+                  url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2000&q=80') center/cover;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(245, 158, 11, 0.1));
+      z-index: 1;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 0 2rem;
+    }
+    
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--text), var(--accent-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
+    
+    .hero h2 {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-bottom: 3rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* Main Content */
+    .main-content {
+      position: relative;
+      background: var(--secondary);
+      padding: 4rem 0;
+    }
+    
+         .content-wrapper {
+       max-width: 90%;
+       margin: 0 auto;
+       padding: 0 2rem;
+     }
+    
+         /* Parallel Cards Section */
+     .parallel-cards {
+       display: grid;
+       grid-template-columns: 1fr 1fr;
+       gap: 3rem;
+       margin: 4rem 0;
+       /* max-width: 1000px; */
+       margin-left: auto;
+       margin-right: auto;
+     }
+     
+     .card {
+       background: var(--card);
+       border-radius: 1rem;
+       overflow: hidden;
+       backdrop-filter: blur(10px);
+       border: 1px solid var(--glass);
+       transition: transform 0.3s ease, box-shadow 0.3s ease;
+     }
+     
+     .card:hover {
+       transform: translateY(-5px);
+       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+     }
+     
+     .card-image {
+       width: 100%;
+       height: 300px;
+       overflow: hidden;
+     }
+     
+     .card-image img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+       transition: transform 0.3s ease;
+     }
+     
+     .card:hover .card-image img {
+       transform: scale(1.05);
+     }
+     
+     .card-content {
+       padding: 2rem;
+     }
+     
+     .card-content h3 {
+       font-size: 1.5rem;
+       font-weight: 600;
+       margin-bottom: 1rem;
+       color: var(--accent-light);
+     }
+     
+     .card-content p {
+       color: var(--text-muted);
+       margin-bottom: 1rem;
+       font-size: 1.05rem;
+       line-height: 1.6;
+     }
+    
+    /* Benefits Section */
+    .benefits {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(245, 158, 11, 0.1));
+      padding: 3rem 2rem;
+      border-radius: 1rem;
+      margin: 3rem 0;
+      text-align: center;
+    }
+    
+    .benefits h3 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--text);
+    }
+    
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .benefit-item {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--glass);
+      transition: transform 0.3s ease;
+    }
+    
+    .benefit-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .benefit-item .icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--success);
+    }
+    
+    .benefit-item h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    
+    .benefit-item p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      border-radius: 1rem;
+      margin: 3rem 0;
+    }
+    
+    .cta-section h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+    }
+    
+    .cta-section p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .cta-btn {
+      display: inline-block;
+      background: var(--cta);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+    
+    .cta-btn:hover {
+      background: var(--cta-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+      color: var(--primary);
+    }
+    
+         /* Responsive Design */
+     @media (max-width: 768px) {
+       .parallel-cards {
+         grid-template-columns: 1fr;
+         gap: 2rem;
+       }
+       
+       .hero-content {
+         padding: 0 1rem;
+       }
+       
+       .content-wrapper {
+         padding: 0 1rem;
+       }
+       
+       .benefits-grid {
+         grid-template-columns: 1fr;
+       }
+     }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>How Bad Is It, Really?</h1>
+      <h2>Take the BreakFree Addiction Calculator to see your real addiction score and recovery timeline.</h2>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="main-content">
+    <div class="content-wrapper">
+      
+      <!-- Parallel Cards Section -->
+      <div class="parallel-cards">
+        <!-- First Card: The Silent Epidemic -->
+        <div class="card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Man looking at phone in dark room">
+          </div>
+          <div class="card-content">
+            <h3>The Silent Epidemic</h3>
+            <p>Porn is the silent killer destroying millions of young men's lives. And now, with OnlyFans and the rise of findom, it's getting worse. Sex work has been democratized, and it's exploiting men's loneliness, trauma, and mental health at scale.</p>
+            <p>If you feel like porn or findom is holding you back… If it's impacted your life, your energy, your focus, your relationships… You might be addicted - even if you don't realize how bad it is yet.</p>
+          </div>
+        </div>
+
+        <!-- Second Card: Your Path to Freedom -->
+        <div class="card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Person walking towards light">
+          </div>
+          <div class="card-content">
+            <h3>Your Path to Freedom</h3>
+            <p>Addiction comes in levels. The first step is always awareness. This tool helps you locate yourself on the map - not to shame you, but to show you where you stand… and where to go next.</p>
+            <p>Once you finish, you'll receive a personalized report with your score - plus a free recovery guide to help you take your first real step toward freedom.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benefits Section -->
+      <div class="benefits">
+        <h3>What You'll Get</h3>
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <div class="icon">💰</div>
+            <h4>Real Cost Analysis</h4>
+            <p>Understand the true financial and emotional cost of your addiction</p>
+          </div>
+          <div class="benefit-item">
+            <div class="icon">⏰</div>
+            <h4>Recovery Timeline</h4>
+            <p>Get a realistic estimate of how long your healing journey will take</p>
+          </div>
+          <div class="benefit-item">
+            <div class="icon">📚</div>
+            <h4>Free Resources</h4>
+            <p>Receive a comprehensive ebook and shareable result card</p>
+          </div>
+          <div class="benefit-item">
+            <div class="icon">🔒</div>
+            <h4>100% Private</h4>
+            <p>Your results are completely anonymous and confidential</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="cta-section">
+        <h3>Ready to Break Free?</h3>
+        <p>We built this because we're on a mission to help young men break free from addiction and rebuild their life - and build a future where real freedom is the norm.</p>
+        <a href="/test" class="cta-btn">Start the Test Now</a>
+      </div>
+
+    </div>
+  </section>
+</body>
+</html> 
