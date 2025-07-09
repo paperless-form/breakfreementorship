@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>How Bad Is It, Really? | BreakFree Calculator</title>
+  <title>BreakFree Calculator</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
     :root {
       --primary: #0f172a;
@@ -41,8 +42,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9)), 
-                  url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2000&q=80') center/cover;
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.85)),
+        url('banner_desktop.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    @media (max-width: 768px) {
+      .hero {
+        background:
+          linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.85)),
+          url('banner_mobile.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
     }
     
     .hero::before {
@@ -60,21 +75,25 @@
       position: relative;
       z-index: 2;
       text-align: center;
-      max-width: 800px;
+      max-width: 873px;
       padding: 0 2rem;
     }
     
+    /* Hero Heading Multicolor Gradient */
     .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 700;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, var(--text), var(--accent-light));
+      font-size: clamp(2.5rem, 5vw, 3.2rem);
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(90deg, #3b82f6 0%, #f59e0b 50%, #10b981 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -0.02em;
+      text-fill-color: transparent;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      text-align: center;
+      text-shadow: 0 2px 8px rgba(16, 24, 39, 0.08);
     }
-    
     .hero h2 {
       font-size: clamp(1.1rem, 2.5vw, 1.4rem);
       color: var(--text-muted);
@@ -83,6 +102,7 @@
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
+      text-align: center;
     }
     
     /* Main Content */
@@ -125,15 +145,26 @@
      
      .card-image {
        width: 100%;
-       height: 300px;
+       /* height: 260px; */
+       /* max-height: 40vw; */
+       min-height: 180px;
        overflow: hidden;
+       display: flex;
+       align-items: center;
+       justify-content: center;
      }
      
      .card-image img {
        width: 100%;
        height: 100%;
+       max-width: 100%;
+       max-height: 100%;
        object-fit: cover;
+       object-position: center;
        transition: transform 0.3s ease;
+       border-radius: 0.5rem;
+       background: #222;
+       display: block;
      }
      
      .card:hover .card-image img {
@@ -279,8 +310,8 @@
 <body>
   <!-- Hero Section -->
   <section class="hero">
-    <div class="hero-content">
-      <h1>How Bad Is It, Really?</h1>
+    <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+      <h1>How Bad Is Your Porn (or findom) Addiction, Really?</h1>
       <h2>Take the BreakFree Addiction Calculator to see your real addiction score and recovery timeline.</h2>
     </div>
   </section>
@@ -292,9 +323,9 @@
       <!-- Parallel Cards Section -->
       <div class="parallel-cards">
         <!-- First Card: The Silent Epidemic -->
-        <div class="card">
+        <div class="card" data-aos="fade-right" data-aos-duration="1000">
           <div class="card-image">
-            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Man looking at phone in dark room">
+            <img src="silent-pandemic.jpg" alt="The Silent Epidemic">
           </div>
           <div class="card-content">
             <h3>The Silent Epidemic</h3>
@@ -304,38 +335,50 @@
         </div>
 
         <!-- Second Card: Your Path to Freedom -->
-        <div class="card">
+        <div class="card" data-aos="fade-left" data-aos-duration="1000">
           <div class="card-image">
-            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Person walking towards light">
+            <img src="path-to-freedom.jpg" alt="Your Path to Freedom">
           </div>
           <div class="card-content">
-            <h3>Your Path to Freedom</h3>
-            <p>Addiction comes in levels. The first step is always awareness. This tool helps you locate yourself on the map - not to shame you, but to show you where you stand… and where to go next.</p>
-            <p>Once you finish, you'll receive a personalized report with your score - plus a free recovery guide to help you take your first real step toward freedom.</p>
+            <h3>How This Tool Will Help You</h3>
+            <p>This tool is a 15-minute assessment powered by BreakFree.<br>
+            Once you complete the form, we’ll automatically calculate:</p>
+            <ul style="margin-left:1.2em; margin-bottom:1em; color:var(--text-muted); font-size:1.05rem;">
+              <li>Your addiction level</li>
+              <li>The real cost of your addiction (financial, time, emotional, social, sexual, and brain damage)</li>
+              <li>How long recovery will take for you, based on your answers</li>
+            </ul>
+            <p>You’ll then receive:</p>
+            <ul style="margin-left:1.2em; margin-bottom:1em; color:var(--text-muted); font-size:1.05rem;">
+              <li>A detailed PDF report summarizing your scores, broken down by category</li>
+              <li>A Recovery Scorecard (image) you can save or share</li>
+              <li>A free ebook gift to help you understand your addiction and take the first steps toward freedom</li>
+            </ul>
+            <p style="margin-top:1em; color:var(--success); font-weight:600;">No shame. No judgment. Just clarity and direction.</p>
           </div>
         </div>
       </div>
 
       <!-- Benefits Section -->
-      <div class="benefits">
+      <div class="benefits" data-aos="fade-up" data-aos-duration="1000">
         <h3>What You'll Get</h3>
         <div class="benefits-grid">
-          <div class="benefit-item">
+          <div class="benefit-item" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon">💰</div>
             <h4>Real Cost Analysis</h4>
             <p>Understand the true financial and emotional cost of your addiction</p>
           </div>
-          <div class="benefit-item">
+          <div class="benefit-item" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon">⏰</div>
             <h4>Recovery Timeline</h4>
             <p>Get a realistic estimate of how long your healing journey will take</p>
           </div>
-          <div class="benefit-item">
+          <div class="benefit-item" data-aos="zoom-in" data-aos-delay="300">
             <div class="icon">📚</div>
             <h4>Free Resources</h4>
             <p>Receive a comprehensive ebook and shareable result card</p>
           </div>
-          <div class="benefit-item">
+          <div class="benefit-item" data-aos="zoom-in" data-aos-delay="400">
             <div class="icon">🔒</div>
             <h4>100% Private</h4>
             <p>Your results are completely anonymous and confidential</p>
@@ -344,7 +387,7 @@
       </div>
 
       <!-- CTA Section -->
-      <div class="cta-section">
+      <div class="cta-section" data-aos="fade-up" data-aos-duration="1000">
         <h3>Ready to Break Free?</h3>
         <p>We built this because we're on a mission to help young men break free from addiction and rebuild their life - and build a future where real freedom is the norm.</p>
         <a href="/test" class="cta-btn">Start the Test Now</a>
@@ -352,5 +395,9 @@
 
     </div>
   </section>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 </html> 
