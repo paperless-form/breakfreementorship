@@ -286,6 +286,166 @@
       color: var(--primary);
     }
     
+    /* Testimonials Section */
+    .testimonials {
+      margin: 4rem 0;
+      text-align: center;
+    }
+    
+    .testimonials h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      color: var(--text);
+      background: linear-gradient(90deg, #3b82f6 0%, #f59e0b 50%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+    
+    .testimonials-slider {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 1rem;
+      background: var(--card);
+      border: 1px solid var(--glass);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+    }
+    
+    .slider-track {
+      display: flex;
+      width: 500%;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+    
+    .testimonial-slide {
+      position: relative;
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    
+    .testimonial-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+      overflow: hidden;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    
+    .testimonial-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .testimonial-content p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      font-style: italic;
+      max-width: 600px;
+      margin: 0;
+    }
+    
+    .testimonial-author {
+      border-top: 1px solid var(--glass);
+      padding-top: 1rem;
+    }
+    
+    .author-info h4 {
+      color: var(--accent-light);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    
+    .author-info span {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    
+    .slider-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+    
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .dot:hover {
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .dot.active {
+      background-color: var(--accent);
+      border-color: var(--accent-light);
+      transform: scale(1.2);
+    }
+    
+    /* Floating Test Button */
+    
+    @media (max-width: 768px) {
+      .floating-test-btn {
+        bottom: 15px;
+        left: 20px;
+        right: 20px;
+        transform: none;
+      }
+      
+      .floating-btn {
+        width: 100%;
+        text-align: center;
+        font-size: 0.95rem;
+        padding: 0.9rem 1.5rem;
+      }
+    }
+    
          /* Responsive Design */
      @media (max-width: 768px) {
        .parallel-cards {
@@ -303,6 +463,41 @@
        
        .benefits-grid {
          grid-template-columns: 1fr;
+       }
+       
+       .testimonials-slider {
+         max-width: 95%;
+         height: 280px;
+       }
+       
+       .slider-container {
+         height: 280px;
+       }
+       
+       .testimonial-slide {
+         padding: 1.5rem;
+       }
+       
+       .testimonial-avatar {
+         width: 60px;
+         height: 60px;
+         margin-bottom: 1rem;
+       }
+       
+       .avatar-img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+         border-radius: 50%;
+       }
+       
+       .testimonial-content p {
+         font-size: 1rem;
+       }
+       
+       .testimonials h3 {
+         font-size: 1.6rem;
+         margin-bottom: 2rem;
        }
      }
   </style>
@@ -342,19 +537,19 @@
           <div class="card-content">
             <h3>How This Tool Will Help You</h3>
             <p>This tool is a 15-minute assessment powered by BreakFree.<br>
-            Once you complete the form, we’ll automatically calculate:</p>
+            Once you complete the form, we'll automatically calculate:</p>
             <ul style="margin-left:1.2em; margin-bottom:1em; color:var(--text-muted); font-size:1.05rem;">
               <li>Your addiction level</li>
               <li>The real cost of your addiction (financial, time, emotional, social, sexual, and brain damage)</li>
               <li>How long recovery will take for you, based on your answers</li>
             </ul>
-            <p>You’ll then receive:</p>
+            <p>You'll then receive:</p>
             <ul style="margin-left:1.2em; margin-bottom:1em; color:var(--text-muted); font-size:1.05rem;">
               <li>A detailed PDF report summarizing your scores, broken down by category</li>
               <li>A Recovery Scorecard (image) you can save or share</li>
               <li>A free ebook gift to help you understand your addiction and take the first steps toward freedom</li>
             </ul>
-            <p style="margin-top:1em; color:var(--success); font-weight:600;">No shame. No judgment. Just clarity and direction.</p>
+            <p style="margin-top:1em; color:var(--success); font-weight:600;">No shame. No judgment. Just clarity and direction.</p>
           </div>
         </div>
       </div>
@@ -393,11 +588,123 @@
         <a href="/test" class="cta-btn">Start the Test Now</a>
       </div>
 
+      <!-- Testimonials Section -->
+      <div class="testimonials" data-aos="fade-up" data-aos-duration="1000">
+        <h3>What Others Are Saying</h3>
+        <div class="testimonials-slider">
+          <div class="slider-container">
+            <div class="slider-track">
+              <div class="testimonial-slide active">
+                <div class="testimonial-avatar">
+                  <img src="/user.jpg" alt="User Avatar" class="avatar-img">
+                </div>
+                <div class="testimonial-content">
+                  <p>"This calculator opened my eyes to how much porn was really affecting my life. The recovery timeline gave me hope and direction. I'm 3 months clean now and feeling better than ever."</p>
+                </div>
+              </div>
+
+              <div class="testimonial-slide">
+                <div class="testimonial-avatar">
+                  <img src="/user.jpg" alt="User Avatar" class="avatar-img">
+                </div>
+                <div class="testimonial-content">
+                  <p>"The financial cost analysis was a wake-up call. I was spending hundreds on OnlyFans without realizing it. This tool helped me understand the real impact and motivated me to change."</p>
+                </div>
+              </div>
+
+              <div class="testimonial-slide">
+                <div class="testimonial-avatar">
+                  <img src="/user.jpg" alt="User Avatar" class="avatar-img">
+                </div>
+                <div class="testimonial-content">
+                  <p>"I thought I had it under control, but the assessment showed I was severely addicted. The detailed report helped me explain my situation to my therapist. Recovery is hard but worth it."</p>
+                </div>
+              </div>
+
+              <div class="testimonial-slide">
+                <div class="testimonial-avatar">
+                  <img src="/user.jpg" alt="User Avatar" class="avatar-img">
+                </div>
+                <div class="testimonial-content">
+                  <p>"The findom section really hit home. I was being exploited financially and emotionally. This tool helped me recognize the patterns and break free from the cycle."</p>
+                </div>
+              </div>
+
+              <div class="testimonial-slide">
+                <div class="testimonial-avatar">
+                  <img src="/user.jpg" alt="User Avatar" class="avatar-img">
+                </div>
+                <div class="testimonial-content">
+                  <p>"My relationships were suffering and I couldn't figure out why. The assessment revealed how porn was affecting my brain chemistry and social skills. I'm rebuilding my life now."</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="slider-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+            <span class="dot" data-slide="4"></span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
+  
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init();
+    
+    // Testimonials Slider
+    const sliderTrack = document.querySelector('.slider-track');
+    const dots = document.querySelectorAll('.dot');
+    const slides = document.querySelectorAll('.testimonial-slide');
+    let currentSlide = 0;
+    let autoSlideInterval;
+    
+    function goToSlide(slideIndex) {
+      currentSlide = slideIndex;
+      const translateX = -slideIndex * 20; // 20% per slide
+      sliderTrack.style.transform = `translateX(${translateX}%)`;
+      
+      // Update dots
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === slideIndex);
+      });
+    }
+    
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      goToSlide(currentSlide);
+    }
+    
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(nextSlide, 4000); // Change slide every 4 seconds
+    }
+    
+    function stopAutoSlide() {
+      clearInterval(autoSlideInterval);
+    }
+    
+    // Dot click handlers
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        stopAutoSlide();
+        startAutoSlide(); // Restart auto-slide
+      });
+    });
+    
+    // Pause auto-slide on hover
+    const slider = document.querySelector('.testimonials-slider');
+    slider.addEventListener('mouseenter', stopAutoSlide);
+    slider.addEventListener('mouseleave', startAutoSlide);
+    
+    // Start auto-slide
+    startAutoSlide();
   </script>
 </body>
 </html> 
