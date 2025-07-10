@@ -122,6 +122,41 @@
       margin: 0 auto;
     }
 
+    .time-notice {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(59, 130, 246, 0.2));
+      border: 2px solid var(--cta);
+      border-radius: 0.75rem;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem auto 0;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    .time-notice strong {
+      color: var(--cta);
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .time-notice i {
+      color: var(--cta);
+      margin-right: 0.5rem;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      }
+      50% {
+        transform: scale(1.02);
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+      }
+    }
+
     /* Form Container */
     .form-container {
       background: var(--card);
@@ -530,6 +565,10 @@
       <div class="header">
         <h1>Answer honestly. This is for you.</h1>
         <p>Take your time and be completely honest with yourself. Your answers will help us provide you with the most accurate assessment.</p>
+        <div class="time-notice">
+          <strong><i class="fas fa-clock"></i>Time Estimate</strong>
+          Make sure to set aside 10 to 15mins to complete this test
+        </div>
       </div>
 
       <!-- Form -->
