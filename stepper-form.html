@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BreakFree Addiction Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #0f172a;
+      --secondary: #1e293b;
+      --accent: #3b82f6;
+      --accent-light: #60a5fa;
+      --cta: #f59e0b;
+      --cta-hover: #d97706;
+      --text: #f8fafc;
+      --text-muted: #cbd5e1;
+      --success: #10b981;
+      --error: #ef4444;
+      --warning: #f59e0b;
+      --card: rgba(30, 41, 59, 0.8);
+      --glass: rgba(255, 255, 255, 0.1);
+    }
+    
+    * { 
+      box-sizing: border-box; 
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--primary);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+
+
+    /* Main Container */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .main-content {
+      margin-top: 0; /* Remove space for sticky logo */
+    }
+
+    /* Loader */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-content {
+      text-align: center;
+      color: var(--text);
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid var(--glass);
+      border-top: 4px solid var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loader-text {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(245, 158, 11, 0.1));
+      border-radius: 1rem;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #3b82f6 0%, #f59e0b 50%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Form Container */
+    .form-container {
+      background: var(--card);
+      border-radius: 1rem;
+      padding: 2rem;
+      border: 1px solid var(--glass);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-step {
+      display: none;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .form-step.active {
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--accent-light);
+    }
+
+    .section-title i {
+      font-size: 2rem;
+      color: var(--accent);
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    .form-label i {
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--glass);
+      border-radius: 0.5rem;
+      background: var(--secondary);
+      color: var(--text);
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-input.error {
+      border-color: var(--error);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--glass);
+      border-radius: 0.5rem;
+      background: var(--secondary);
+      color: var(--text);
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .form-select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-select.error {
+      border-color: var(--error);
+    }
+
+
+
+    /* Navigation */
+    .form-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--glass);
+    }
+
+    .nav-btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: var(--text);
+      border: 1px solid var(--glass);
+    }
+
+    .btn-secondary:hover {
+      background: var(--glass);
+      color: var(--text);
+    }
+
+    /* Select2 Custom Styling */
+    .select2-container--bootstrap-5 .select2-selection {
+      background: var(--secondary) !important;
+      border: 2px solid var(--glass) !important;
+      border-radius: 0.5rem !important;
+      color: var(--text) !important;
+      min-height: 48px !important;
+    }
+
+    .select2-container--bootstrap-5 .select2-selection--single {
+      padding: 0.75rem 1rem !important;
+    }
+
+    .select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered {
+      color: var(--text) !important;
+      padding: 0 !important;
+    }
+
+    .select2-container--bootstrap-5 .select2-selection--single .select2-selection__arrow {
+      color: var(--text-muted) !important;
+    }
+
+    .select2-container--bootstrap-5.select2-container--focus .select2-selection {
+      border-color: var(--accent) !important;
+    }
+
+    .select2-container--bootstrap-5.select2-container--error .select2-selection {
+      border-color: var(--error) !important;
+    }
+
+    .select2-dropdown {
+      background: var(--secondary) !important;
+      border: 2px solid var(--accent) !important;
+      border-radius: 0.5rem !important;
+    }
+
+    .select2-results__option {
+      color: var(--text) !important;
+      padding: 0.75rem 1rem !important;
+    }
+
+    .select2-results__option--highlighted[aria-selected] {
+      background: var(--accent) !important;
+      color: white !important;
+    }
+
+    .select2-search__field {
+      background: var(--secondary) !important;
+      color: var(--text) !important;
+      border: 1px solid var(--glass) !important;
+      border-radius: 0.25rem !important;
+      padding: 0.5rem !important;
+    }
+
+    .select2-search__field:focus {
+      outline: none !important;
+      border-color: var(--accent) !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .main-content {
+        margin-top: 0;
+      }
+
+      .form-container {
+        padding: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .section-title i {
+        font-size: 1.5rem;
+      }
+    }
+
+
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .checkbox-option {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      border: 2px solid var(--glass);
+      border-radius: 0.5rem;
+      background: var(--secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-option:hover {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .checkbox-option.selected {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.2);
+    }
+
+    .checkbox-option input[type="checkbox"] {
+      margin-right: 0.75rem;
+      transform: scale(1.2);
+    }
+
+    /* Success Modal Styles */
+    .success-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .success-modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .success-modal {
+      background: var(--card);
+      border-radius: 1rem;
+      border: 1px solid var(--glass);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .success-modal-overlay.show .success-modal {
+      transform: scale(1);
+    }
+
+    .success-modal-content {
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .success-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      animation: bounce 0.6s ease;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    .success-headline {
+      color: var(--success);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .success-message {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .success-message p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .success-message p:last-of-type {
+      margin-bottom: 1.5rem;
+    }
+
+    .privacy-note {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      color: var(--success);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .privacy-note i {
+      font-size: 1.2rem;
+    }
+
+    /* Responsive Modal */
+    @media (max-width: 768px) {
+      .success-modal {
+        width: 95%;
+        margin: 1rem;
+      }
+
+      .success-modal-content {
+        padding: 2rem 1.5rem;
+      }
+
+      .success-headline {
+        font-size: 1.5rem;
+      }
+
+      .success-icon {
+        font-size: 3rem;
+      }
+    }
+
+    .alert-danger{
+      color: red !important;
+    }
+
+    .d-none{
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+
+  <div class="loader">
+    <div class="loader-content">
+      <div class="spinner"></div>
+      <p class="loader-text">Loading...</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="main-content">
+      <!-- Header -->
+      <div class="header">
+        <h1>Answer honestly. This is for you.</h1>
+        <p>Take your time and be completely honest with yourself. Your answers will help us provide you with the most accurate assessment.</p>
+      </div>
+
+      <!-- Form -->
+      <div class="form-container">
+        <form id="addictionTestForm">
+          <!-- Section I: Who Are You -->
+          <div class="form-step active" data-step="1">
+            <h2 class="section-title">
+              <i class="fas fa-user"></i>
+              Section I: Who Are You
+            </h2>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-signature"></i>
+                1. What's your name or nickname?
+              </label>
+              <input type="text" class="form-input" name="name" placeholder="Enter your name or nickname" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-envelope"></i>
+                2. What's your email address?
+              </label>
+              <input type="email" class="form-input" name="email" placeholder="Enter your email address" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-birthday-cake"></i>
+                3. How old are you?
+              </label>
+              <select class="form-select select2" name="age" required>
+                <option value="" disabled selected>Select your age range</option>
+                <option value="under18">Under 18</option>
+                <option value="18-24">18–24</option>
+                <option value="25-34">25–34</option>
+                <option value="35-44">35–44</option>
+                <option value="45-54">45–54</option>
+                <option value="55+">55+</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-globe"></i>
+                4. What country do you live in?
+              </label>
+              <select class="form-select select2" name="country" required>
+                <option value="" disabled selected>Select your country</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-briefcase"></i>
+                5. What's your current profession/field of work?
+              </label>
+              <select class="form-select select2 profession" name="profession" required>
+                <option value="" disabled selected>Select your profession</option>
+                <option value="student">Student</option>
+                <option value="unemployed">Unemployed</option>
+                <option value="retired">Retired</option>
+                <option value="manual_labor">Manual labor (construction, delivery, factory, etc.)</option>
+                <option value="customer_service">Customer service / retail</option>
+                <option value="administrative">Administrative / office support</option>
+                <option value="it_tech">IT / Tech</option>
+                <option value="finance">Finance / Accounting</option>
+                <option value="marketing">Marketing / Sales</option>
+                <option value="education">Education / Teaching</option>
+                <option value="healthcare">Healthcare / Therapy</option>
+                <option value="legal">Legal / Government</option>
+                <option value="entrepreneur">Entrepreneur / Business owner</option>
+                <option value="creative">Creative (design, music, writing, etc.)</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <!-- Other profession input field (hidden by default) -->
+            <div class="form-group d-none" id="otherProfessionGroup">
+              <label class="form-label">
+                <i class="fas fa-edit"></i>
+                Please specify your profession
+              </label>
+              <input type="text" class="form-input" name="otherProfession" placeholder="Enter your profession">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-dollar-sign"></i>
+                6. What's your estimated yearly income?
+              </label>
+              <select class="form-select select2" name="income" required>
+                <option value="" disabled selected>Select your income range</option>
+                <option value="under10k">Under $10,000</option>
+                <option value="10k-30k">$10,000–$30,000</option>
+                <option value="30k-60k">$30,000–$60,000</option>
+                <option value="60k-100k">$60,000–$100,000</option>
+                <option value="100k-200k">$100,000–$200,000</option>
+                <option value="200k+">$200,000+</option>
+              </select>
+            </div>
+
+            <div class="form-navigation">
+              <button type="button" class="nav-btn btn-secondary" onclick="prevStep()" style="visibility: hidden;">Previous Section</button>
+              <button type="button" class="nav-btn btn-primary" onclick="nextStep()">Next Section</button>
+            </div>
+          </div>
+
+          <!-- Section II: Your Addiction Timeline -->
+          <div class="form-step" data-step="2">
+            <h2 class="section-title">
+              <i class="fas fa-clock"></i>
+              Section II: Your Addiction Timeline
+            </h2>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-calendar-alt"></i>
+                7. At what age did you first watch porn?
+              </label>
+              <select class="form-select select2" name="firstPornAge" required>
+                <option value="" disabled selected>Select when you first watched porn</option>
+                <option value="under10">Under 10</option>
+                <option value="10-14">10–14</option>
+                <option value="15-17">15–17</option>
+                <option value="18-21">18–21</option>
+                <option value="22-25">22–25</option>
+                <option value="26-30">26–30</option>
+                <option value="31-40">31–40</option>
+                <option value="after40">After 40</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-heart"></i>
+                8. Were you sexually active with a real person before that?
+              </label>
+              <select class="form-select select2" name="sexuallyActiveBefore" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+                <option value="complicated">It's complicated</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-hourglass-half"></i>
+                9. How long have you been addicted?
+              </label>
+              <select class="form-select select2" name="addictionDuration" required>
+                <option value="" disabled selected>Select how long you've been addicted</option>
+                <option value="not_addicted">I don't think I'm addicted</option>
+                <option value="under6months">&lt;6 months</option>
+                <option value="6months-1year">6 months–1 year</option>
+                <option value="1-2years">1–2 years</option>
+                <option value="2-5years">2–5 years</option>
+                <option value="5+years">5+ years</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-chart-line"></i>
+                10. Which of these apply to your escalation? (select all that apply)
+              </label>
+              <div class="checkbox-group" name="escalation">
+                <label class="checkbox-option">
+                  <input type="checkbox" name="escalation" value="more_often" required>
+                  <span>I started watching more often</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="escalation" value="fetish_content" required>
+                  <span>I started watching fetish content</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="escalation" value="domination" required>
+                  <span>I escalated to domination/humiliation content</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="escalation" value="hard_content" required>
+                  <span>I escalated to hard/extreme content</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="escalation" value="paying_porn" required>
+                  <span>I started paying for porn</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="escalation" value="paying_models" required>
+                  <span>I started paying models directly</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="escalation" value="paying_findom" required>
+                  <span>I started paying for findom</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="escalation" value="fetish_main" required>
+                  <span>My fetish became my main turn-on</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="escalation" value="findom_main" required>
+                  <span>Findom became my main thing</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="escalation" value="same_level" required>
+                  <span>I stayed at the same level since the beginning</span>
+                </label>
+              </div>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-calendar-week"></i>
+                11. In the past year, how many days a week did you watch porn?
+              </label>
+              <select class="form-select select2" name="daysPerWeek" required>
+                <option value="" disabled selected>Select how many days per week</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-hand-paper"></i>
+                12. Did you masturbate while watching?
+              </label>
+              <select class="form-select select2" name="masturbationType" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="just_watched">No, I just watched</option>
+                <option value="climaxed">Yes, I climaxed (no edging)</option>
+                <option value="edged">Yes, I edged then climaxed</option>
+                <option value="mix">A mix</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-stopwatch"></i>
+                13. How long were your sessions on average?
+              </label>
+              <select class="form-select select2" name="sessionLength" required>
+                <option value="" disabled selected>Select your average session length</option>
+                <option value="under30min">Mostly under 30 min, little browsing</option>
+                <option value="over1hour">Mostly over 1 hour, lots of clicking</option>
+                <option value="mix">A mix</option>
+              </select>
+              
+            </div>
+
+            <div class="form-navigation">
+              <button type="button" class="nav-btn btn-secondary" onclick="prevStep()">Previous Section</button>
+              <button type="button" class="nav-btn btn-primary" onclick="nextStep()">Next Section</button>
+            </div>
+          </div>
+
+          <!-- Section III: Financial Damage -->
+          <div class="form-step" data-step="3">
+            <h2 class="section-title">
+              <i class="fas fa-dollar-sign"></i>
+              Section III: Financial Damage
+            </h2>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-credit-card"></i>
+                14. On average, how much do you spend per month on porn/findom?
+              </label>
+              <select class="form-select select2" name="monthlySpending" required>
+                <option value="" disabled selected>Select your monthly spending</option>
+                <option value="0">$0</option>
+                <option value="under100">&lt;$100</option>
+                <option value="100-250">$100–$250</option>
+                <option value="250-500">$250–$500</option>
+                <option value="500-1000">$500–$1000</option>
+                <option value="1000-2000">$1000–$2000</option>
+                <option value="2000+">$2000+</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-chart-line"></i>
+                15. How fast did your spending increase over time?
+              </label>
+              <select class="form-select select2" name="spendingIncrease" required>
+                <option value="" disabled selected>Select how fast your spending increased</option>
+                <option value="drastically_fast">Drastically fast</option>
+                <option value="slightly_fast">Slightly fast</option>
+                <option value="consistent">It's been consistent</option>
+                <option value="never_spent">I've never spent money</option>
+                <option value="stopped_spending">I stopped spending money on findom</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-exclamation-triangle"></i>
+                16. Have you ever borrowed money, gone into debt, or delayed rent/bills due to this?
+              </label>
+              <select class="form-select select2" name="financialStrain" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-shield-alt"></i>
+                17. Have you ever been blackmailed, scammed, or financially exploited?
+              </label>
+              <select class="form-select select2" name="exploitation" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes_paid">Yes, and I paid</option>
+                <option value="yes_no_paid">Yes, but I didn't pay</option>
+                <option value="no">No</option>
+              </select>
+              
+            </div>
+
+            <div class="form-navigation">
+              <button type="button" class="nav-btn btn-secondary" onclick="prevStep()">Previous Section</button>
+              <button type="button" class="nav-btn btn-primary" onclick="nextStep()">Next Section</button>
+            </div>
+          </div>
+
+          <!-- Section IV: Time & Energy Drain -->
+          <div class="form-step" data-step="4">
+            <h2 class="section-title">
+              <i class="fas fa-clock"></i>
+              Section IV: Time & Energy Drain
+            </h2>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-hourglass-half"></i>
+                18. How many hours/week do you spend on porn/findom content?
+              </label>
+              <select class="form-select select2" name="weeklyHours" required>
+                <option value="" disabled selected>Select hours per week</option>
+                <option value="under1">&lt;1 hour</option>
+                <option value="1-3">1–3 hours</option>
+                <option value="4-7">4–7 hours</option>
+                <option value="8-15">8–15 hours</option>
+                <option value="16-25">16–25 hours</option>
+                <option value="26-40">26–40 hours</option>
+                <option value="40+">40+ hours</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-calendar-alt"></i>
+                19. How long have you been maintaining this pattern?
+              </label>
+              <select class="form-select select2" name="patternDuration" required>
+                <option value="" disabled selected>Select how long you've maintained this pattern</option>
+                <option value="under3months">Less than 3 months</option>
+                <option value="3-6months">3–6 months</option>
+                <option value="6-12months">6–12 months</option>
+                <option value="1-2years">1–2 years</option>
+                <option value="2-5years">2–5 years</option>
+                <option value="5+years">5+ years</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-brain"></i>
+                20. After watching, how long does it take to regain your focus?
+              </label>
+              <select class="form-select select2" name="focusRecovery" required>
+                <option value="" disabled selected>Select focus recovery time</option>
+                <option value="couple_minutes">A couple of minutes</option>
+                <option value="up_to_hour">Up to an hour</option>
+                <option value="few_hours">A few hours</option>
+                <option value="rest_of_day">The rest of the day is ruined</option>
+                <option value="more_than_day">More than a day</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-exclamation-circle"></i>
+                21. Which of these areas has your addiction impacted? (select all that apply)
+              </label>
+              <div class="checkbox-group" name="impactedAreas">
+                <label class="checkbox-option">
+                  <input type="checkbox" name="impactedAreas" value="physical_health" required>
+                  <span>Physical health (skipped workouts, poor diet)</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="impactedAreas" value="career_income" required>
+                  <span>Career / income (missed promotions or work output)</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="impactedAreas" value="hobbies_skills" required>
+                  <span>Hobbies or personal skills</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="impactedAreas" value="sleep_energy" required>
+                  <span>Sleep / energy / focus</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="impactedAreas" value="romantic_relationships" required>
+                  <span>Romantic relationships</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="impactedAreas" value="sex_life" required>
+                  <span>Sex life</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="impactedAreas" value="social_friendships" required>
+                  <span>Social life / friendships</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="impactedAreas" value="spirituality_self_respect" required>
+                  <span>Spirituality / self-respect</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="impactedAreas" value="none" required>
+                  <span>None of the above</span>
+                </label>
+              </div>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-lightbulb"></i>
+                22. If you were addiction-free, what would you use that time for? (select all that apply)
+              </label>
+              <div class="checkbox-group" name="timeUsage">
+                <label class="checkbox-option">
+                  <input type="checkbox" name="timeUsage" value="build_business" required>
+                  <span>Build a business</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="timeUsage" value="get_fit" required>
+                  <span>Get fit / improve health</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="timeUsage" value="improve_social" required>
+                  <span>Improve social/dating life</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="timeUsage" value="level_up_skills" required>
+                  <span>Level up skills</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="timeUsage" value="not_sure" required>
+                  <span>Not sure</span>
+                </label>
+              </div>
+              
+            </div>
+
+            <div class="form-navigation">
+              <button type="button" class="nav-btn btn-secondary" onclick="prevStep()">Previous Section</button>
+              <button type="button" class="nav-btn btn-primary" onclick="nextStep()">Next Section</button>
+            </div>
+          </div>
+
+          <!-- Section V: Emotional & Social Consequences -->
+          <div class="form-step" data-step="5">
+            <h2 class="section-title">
+              <i class="fas fa-heart-broken"></i>
+              Section V: Emotional & Social Consequences
+            </h2>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-users"></i>
+                23. How has this addiction impacted your relationships? (select all that apply)
+              </label>
+              <div class="checkbox-group" name="relationshipImpact">
+                <label class="checkbox-option">
+                  <input type="checkbox" name="relationshipImpact" value="lost_friends" required>
+                  <span>I've lost touch with friends</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="relationshipImpact" value="distanced_family" required>
+                  <span>I've distanced myself from family</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="relationshipImpact" value="damaged_romantic" required>
+                  <span>I've damaged my romantic life</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="relationshipImpact" value="isolated_disconnected" required>
+                  <span>I feel more isolated or disconnected socially</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="relationshipImpact" value="none" required>
+                  <span>None of the above</span>
+                </label>
+              </div>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-sad-tear"></i>
+                24. Do you feel ashamed or regretful after using?
+              </label>
+              <select class="form-select select2" name="shameRegret" required>
+                <option value="" disabled selected>Select how often you feel ashamed or regretful</option>
+                <option value="every_time">Every time</option>
+                <option value="often">Often</option>
+                <option value="sometimes">Sometimes</option>
+                <option value="rarely">Rarely</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-user-secret"></i>
+                25. Have you ever lied or hid this from people you care about?
+              </label>
+              <select class="form-select select2" name="liedHidden" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-male"></i>
+                26. Do you sometimes feel like "less of a man" because of this?
+              </label>
+              <select class="form-select select2" name="lessOfMan" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="sometimes">Sometimes</option>
+                <option value="no">No</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-crown"></i>
+                27. Have you ever fantasized about giving up control over your life?
+              </label>
+              <select class="form-select select2" name="giveUpControl" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+              
+            </div>
+
+            <div class="form-navigation">
+              <button type="button" class="nav-btn btn-secondary" onclick="prevStep()">Previous Section</button>
+              <button type="button" class="nav-btn btn-primary" onclick="nextStep()">Next Section</button>
+            </div>
+          </div>
+
+          <!-- Section VI: Sexual Damage & Rewiring -->
+          <div class="form-step" data-step="6">
+            <h2 class="section-title">
+              <i class="fas fa-heart"></i>
+              Section VI: Sexual Damage & Rewiring
+            </h2>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-user-friends"></i>
+                28. Are you sexually active with real people (sex-workers don't count in this question)?
+              </label>
+              <select class="form-select select2" name="sexualActivity" required>
+                <option value="" disabled selected>Select your sexual activity level</option>
+                <option value="regularly">Yes, regularly</option>
+                <option value="occasionally">Occasionally</option>
+                <option value="rarely">Rarely</option>
+                <option value="not_at_all">Not at all</option>
+                <option value="virgin">I'm a virgin</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-fire"></i>
+                29. Do normal things like ass/boobs turn you on?
+              </label>
+              <select class="form-select select2" name="normalArousal" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="yes_but_fetishes_more">Yes, but fetishes turn me on more</option>
+                <option value="yes_but_hard">Yes, but it's hard to get aroused</option>
+                <option value="no">No</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-exclamation-triangle"></i>
+                30. Do you struggle with any of these? (select all that apply)
+              </label>
+              <div class="checkbox-group" name="sexualProblems">
+                <label class="checkbox-option">
+                  <input type="checkbox" name="sexualProblems" value="pied" required>
+                  <span>Porn-induced erectile dysfunction (PIED)</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="sexualProblems" value="premature_ejaculation" required>
+                  <span>Premature ejaculation</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="sexualProblems" value="delayed_ejaculation" required>
+                  <span>Delayed ejaculation</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="sexualProblems" value="no_major_issues" required>
+                  <span>No major issues</span>
+                </label>
+              </div>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-clock"></i>
+                31. Did these problems start before or after you became addicted?
+              </label>
+              <select class="form-select select2" name="problemTiming" required>
+                <option value="" disabled selected>Select when problems started</option>
+                <option value="before">Before</option>
+                <option value="after">After</option>
+                <option value="some_before_some_after">Some before, some after</option>
+                <option value="no_problem">I don't have any problem</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-laptop"></i>
+                32. Have you done online sessions with sex workers?
+              </label>
+              <select class="form-select select2" name="onlineSessions" required>
+                <option value="" disabled selected>Select frequency of online sessions</option>
+                <option value="often">Often</option>
+                <option value="occasionally">Occasionally</option>
+                <option value="rarely">Rarely</option>
+                <option value="stopped">I stopped</option>
+                <option value="never">Never</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-user"></i>
+                33. Have you done in-person sessions with sex workers?
+              </label>
+              <select class="form-select select2" name="inPersonSessions" required>
+                <option value="" disabled selected>Select frequency of in-person sessions</option>
+                <option value="often">Often</option>
+                <option value="occasionally">Occasionally</option>
+                <option value="rarely">Rarely</option>
+                <option value="stopped">I stopped</option>
+                <option value="never">Never</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-list"></i>
+                34. What type of sessions have you done? (select all that apply)
+              </label>
+              <div class="checkbox-group" name="sessionTypes">
+                <label class="checkbox-option">
+                  <input type="checkbox" name="sessionTypes" value="vanilla" required>
+                  <span>Vanilla</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="sessionTypes" value="fetish" required>
+                  <span>Fetish</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="sessionTypes" value="femdom" required>
+                  <span>Femdom</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="sessionTypes" value="hardcore_femdom" required>
+                  <span>Hardcore femdom (pegging, sissy, toilet, etc.)</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="sessionTypes" value="trans" required>
+                  <span>Trans</span>
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" name="sessionTypes" value="gay" required>
+                  <span>Gay</span>
+                </label>
+              </div>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-calculator"></i>
+                35. How many paid in-person sessions have you done?
+              </label>
+              <select class="form-select select2" name="sessionCount" required>
+                <option value="" disabled selected>Select number of sessions</option>
+                <option value="only_once">Only once</option>
+                <option value="1-5">1–5</option>
+                <option value="6-20">6–20</option>
+                <option value="20-50">20-50</option>
+                <option value="51+">51+</option>
+              </select>
+              
+            </div>
+
+            <div class="form-navigation">
+              <button type="button" class="nav-btn btn-secondary" onclick="prevStep()">Previous Section</button>
+              <button type="button" class="nav-btn btn-primary" onclick="nextStep()">Next Section</button>
+            </div>
+          </div>
+
+          <!-- Section VII: Brain Damage Score -->
+          <div class="form-step" data-step="7">
+            <h2 class="section-title">
+              <i class="fas fa-brain"></i>
+              Section VII: Brain Damage Score
+            </h2>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-meh"></i>
+                36. How often do you feel emotionally numb or joyless?
+              </label>
+              <select class="form-select select2" name="emotionalNumbness" required>
+                <option value="" disabled selected>Select how often you feel emotionally numb</option>
+                <option value="daily">Daily</option>
+                <option value="often">Often</option>
+                <option value="sometimes">Sometimes</option>
+                <option value="rarely">Rarely</option>
+                <option value="never">Never</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-boredom"></i>
+                37. Do normal life pleasures feel boring or dull to you?
+              </label>
+              <select class="form-select select2" name="lifePleasures" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes</option>
+                <option value="sometimes">Sometimes</option>
+                <option value="no">No</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-eye"></i>
+                38. How often do you feel like you're watching content you logically don't want, but can't stop?
+              </label>
+              <select class="form-select select2" name="unwantedContent" required>
+                <option value="" disabled selected>Select how often this happens</option>
+                <option value="every_time">Every time</option>
+                <option value="often">Often</option>
+                <option value="sometimes">Sometimes</option>
+                <option value="never">Never</option>
+              </select>
+              
+            </div>
+
+            <div class="form-navigation">
+              <button type="button" class="nav-btn btn-secondary" onclick="prevStep()">Previous Section</button>
+              <button type="button" class="nav-btn btn-primary" onclick="nextStep()">Next Section</button>
+            </div>
+          </div>
+
+          <!-- Section VIII: Recovery Outlook -->
+          <div class="form-step" data-step="8">
+            <h2 class="section-title">
+              <i class="fas fa-road"></i>
+              Section VIII: Recovery Outlook
+            </h2>
+            
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-stop-circle"></i>
+                39. Have you ever tried to seriously quit?
+              </label>
+              <select class="form-select select2" name="quitAttempts" required>
+                <option value="" disabled selected>Select your quit attempts</option>
+                <option value="once_or_twice">Yes, once or twice</option>
+                <option value="many_times">Yes, many times (3+)</option>
+                <option value="never">Never</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-hands-helping"></i>
+                40. Do you currently have support in your recovery?
+              </label>
+              <select class="form-select select2" name="recoverySupport" required>
+                <option value="" disabled selected>Select your recovery support</option>
+                <option value="alone">No, I'm doing it alone</option>
+                <option value="told_friend">I've told a friend</option>
+                <option value="group_program">I'm in a group or program</option>
+              </select>
+              
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-bullseye"></i>
+                41. What's your #1 goal with this quiz?
+              </label>
+              <select class="form-select select2" name="quizGoal" required>
+                <option value="" disabled selected>Select your primary goal</option>
+                <option value="understand_cost">Understand the cost of my addiction</option>
+                <option value="estimate_recovery_time">Estimate how long recovery will take</option>
+                <option value="find_recovery_path">Find a real recovery path</option>
+                <option value="just_curious">Just curious</option>
+              </select>
+              
+            </div>
+
+            <div class="form-navigation">
+              <button type="button" class="nav-btn btn-secondary" onclick="prevStep()">Previous Section</button>
+              <button type="button" class="nav-btn btn-primary submit-btn">Submit Test</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    let currentStep = 1;
+    const totalSteps = 8;
+
+    $(document).ready(function(){
+      $('.select2').select2({
+        theme: 'bootstrap-5'
+      });
+      
+      loadCountries();
+      updateStepDisplay();
+      
+      // Form submission handler
+      // $('#addictionTestForm').on('submit', function(e) {
+      //   e.preventDefault();
+      //   if (validateForm()) {
+      //     // showSuccessMessage();
+      //   }
+      // });
+    });
+
+    $(document).on('click','.submit-btn',function(){
+      if (validateForm()) {
+        showSuccessMessage();
+      }
+    });
+
+    $(document).on('change','.checkbox-option',function(){
+      if($(this).is(':checked')){
+        $(this).closest('.checkbox-option').addClass('selected');
+      }else{
+        $(this).closest('.checkbox-option').removeClass('selected');
+      }
+    });
+
+    $(document).on('change','.profession',function(){
+      if($(this).val() == 'other'){
+        $('#otherProfessionGroup').removeClass('d-none');
+      }else{
+        $('#otherProfessionGroup').addClass('d-none');
+      }
+    });
+
+    async function loadCountries() {
+      const loader = document.querySelector('.loader');
+      
+      try {
+        const response = await fetch('https://restcountries.com/v2/all?fields=name,alpha2Code');
+        const data = await response.json();
+        
+        // Sort countries alphabetically by name
+        data.sort((a, b) => a.name.localeCompare(b.name));
+        
+        const countrySelect = $('select[name="country"]');
+        
+        data.forEach(country => {
+          const option = new Option(country.name, country.alpha2Code);
+          countrySelect.append(option);
+        });
+        
+        // Refresh Select2
+        countrySelect.trigger('change');
+        
+      } catch (error) {
+        console.error('Error loading countries:', error);
+        // Fallback to basic countries list
+        const fallbackCountries = [
+          'United States', 'Canada', 'United Kingdom', 'Australia', 'Germany',
+          'France', 'Italy', 'Spain', 'Netherlands', 'Sweden', 'Norway',
+          'Denmark', 'Finland', 'Switzerland', 'Austria', 'Belgium',
+          'Ireland', 'New Zealand', 'Japan', 'South Korea', 'Singapore',
+          'India', 'Brazil', 'Mexico', 'Argentina', 'Chile', 'Colombia',
+          'Peru', 'South Africa', 'Egypt', 'Nigeria', 'Kenya', 'Ghana'
+        ];
+        
+        const countrySelect = $('select[name="country"]');
+        fallbackCountries.forEach(country => {
+          const option = new Option(country, country);
+          countrySelect.append(option);
+        });
+        countrySelect.trigger('change');
+      } finally {
+        // Hide loader after a minimum time to prevent flickering
+        setTimeout(() => {
+          loader.classList.add('hidden');
+        }, 1000);
+      }
+    }
+
+    function nextStep() {
+      // Validate current step before proceeding
+      if (validateForm()) {
+        if (currentStep < totalSteps) {
+          currentStep++;
+          updateStepDisplay();
+        }
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        currentStep--;
+        updateStepDisplay();
+      }
+    }
+
+    function updateStepDisplay() {
+      // Update form steps with smooth transition
+      document.querySelectorAll('.form-step').forEach(step => {
+        step.classList.remove('active');
+      });
+      
+      // Add a small delay to ensure smooth transition
+      setTimeout(() => {
+        const activeStep = document.querySelector(`[data-step="${currentStep}"]`);
+        if (activeStep) {
+          activeStep.classList.add('active');
+        }
+      }, 50);
+    }
+
+    function validateForm() {
+      var valid = true;
+      
+      $('.alert-danger').remove();
+      
+      // Validate required fields
+      $('input:visible, select:visible').each(function () {
+        if ($(this).val() == "" || $(this).val() == null) {
+          $(this).closest(".form-group").append('<div class="alert-danger ps-1">This field is required</div>');
+          $(this).addClass('error');
+          valid = false;
+        }                
+      });
+      
+      // Validate email fields
+      $('input[type="email"]:visible').each(function(){
+        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        email_check = emailReg.test($(this).val());
+        if(email_check == false) {
+          $(this).closest(".form-group").append('<div class="alert-danger ps-1">Invalid email format</div>');
+          $(this).addClass('error');
+          valid = false;
+        }
+      });
+      
+      // Validate checkbox groups (ensure at least one is checked)
+      $('.checkbox-group:visible').each(function() {
+        var checkboxGroup = $(this);
+        var checkboxes = checkboxGroup.find('input[type="checkbox"]');
+        if (checkboxes.length > 0 && checkboxes.filter(':checked').length < 1) {
+          checkboxGroup.closest('.form-group').append('<div class="alert-danger ps-1">Please select at least one option</div>');
+          checkboxes.first().addClass('error');
+          valid = false;
+        }
+      });
+      
+      // Scroll to first error if validation fails
+      if (!valid) {
+        $("html, body").animate({
+          scrollTop: $(".alert-danger:first").offset().top - 150,
+        }, 100);
+      }
+      
+      return valid;
+    }
+
+    function showSuccessMessage() {
+      // Create modal overlay
+      const modalOverlay = document.createElement('div');
+      modalOverlay.className = 'success-modal-overlay';
+      modalOverlay.innerHTML = `
+        <div class="success-modal">
+          <div class="success-modal-content">
+            <div class="success-icon">✅</div>
+            <h2 class="success-headline">Your answers have been submitted.</h2>
+            <div class="success-message">
+              <p>You'll receive your personalized report within the next 5–10 minutes via email.</p>
+              <p>Make sure to check your spam folder just in case - and don't forget to move our email to your main inbox and add us to your contacts.</p>
+              <p>It will include your scores, estimated recovery time, and two free gifts to help you start breaking free today.</p>
+              <p><strong>Make sure to check your Inbox and Spam folder.</strong></p>
+              <div class="privacy-note">
+                <i class="fas fa-shield-alt"></i>
+                Your answers are 100% private. Only our system sees them.
+              </div>
+            </div>
+            <a href="index.html" class="nav-btn btn-primary">Back to Home</a>
+          </div>
+        </div>
+      `;
+      
+      // Add modal to body
+      document.body.appendChild(modalOverlay);
+      
+      // Show modal with animation
+      setTimeout(() => {
+        modalOverlay.classList.add('show');
+      }, 100);
+    }
+  </script>
+</body>
+</html> 
