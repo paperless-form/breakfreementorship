@@ -1020,30 +1020,16 @@
             <div class="form-group">
               <label class="form-label">
                 <i class="fas fa-lightbulb"></i>
-                22. If you were addiction-free, what would you use that time for? (select all that apply)
+                22. If you were addiction-free, what would you use that time for?
               </label>
-              <div class="checkbox-group" name="timeUsage">
-                <label class="checkbox-option">
-                  <input type="checkbox" name="timeUsage" value="build_business" required>
-                  <span>Build a business</span>
-                </label>
-                <label class="checkbox-option">
-                  <input type="checkbox" name="timeUsage" value="get_fit" required>
-                  <span>Get fit / improve health</span>
-                </label>
-                <label class="checkbox-option">
-                  <input type="checkbox" name="timeUsage" value="improve_social" required>
-                  <span>Improve social/dating life</span>
-                </label>
-                <label class="checkbox-option">
-                  <input type="checkbox" name="timeUsage" value="level_up_skills" required>
-                  <span>Level up skills</span>
-                </label>
-                <label class="checkbox-option">
-                  <input type="checkbox" name="timeUsage" value="not_sure" required>
-                  <span>Not sure</span>
-                </label>
-              </div>
+              <select class="form-select select2" name="timeUsage" required>
+                <option value="" disabled selected>Select what you would use your time for</option>
+                <option value="build_business">Build a business</option>
+                <option value="get_fit">Get fit / improve health</option>
+                <option value="improve_social">Improve social/dating life</option>
+                <option value="level_up_skills">Level up skills</option>
+                <option value="not_sure">Not sure</option>
+              </select>
               
             </div>
 
@@ -1438,6 +1424,7 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     let currentStep = 1;
     const totalSteps = 8;
@@ -1459,10 +1446,52 @@
       // });
     });
 
-    $(document).on('click','.submit-btn',function(){
-      if (validateForm()) {
-        showSuccessMessage();
+    $(document).on('click','.submit-btn',function(e){
+      e.preventDefault();
+
+      if (!validateForm()) {
+        return false;
       }
+
+      var form = $("#addictionTestForm");
+      $('.submit-btn').attr('disabled', 'disabled');
+      $('.submit-btn').text('Please wait...');
+
+      var formData = form.serialize();
+      
+      var url_gsheet = "https://script.google.com/macros/s/AKfycbzwx6VnYoxZK78ubasM0NDL1BvEChxgMAZfjYPZgV58txJNZGk7LjA6FoOvna-HPDR4/exec"
+      $.ajax({
+        type: "POST",
+        url: url_gsheet,
+        data: $(form).serialize(),
+        success: function (response) {
+          if (response.result == "success") {
+            // showSuccessMessage();
+            
+            $('.submit-btn').removeAttr('disabled');
+            $('.submit-btn').text('Submit Again');
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: response.error,
+              icon: "error",
+            }).then(function () {
+              $('.submit-btn').removeAttr('disabled');
+              $('.submit-btn').text('Submit Again');
+            });
+          }
+        },
+        error: function (response) {
+          Swal.fire({
+            title: "Error!",
+            text: "Something went wrong",
+            icon: "error",
+          }).then(function () {
+            $('.submit-btn').removeAttr('disabled');
+            $('.submit-btn').text('Submit Again');
+          });
+        }
+      });
     });
 
     $(document).on('change','.checkbox-option',function(){
