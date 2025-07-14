@@ -167,6 +167,62 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
+    /* Progress Bar */
+    .progress-container {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: var(--secondary);
+      border-radius: 0.75rem;
+      border: 1px solid var(--glass);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .progress-text {
+      color: var(--accent-light);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--glass);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
     .form-step {
       display: none;
       opacity: 0;
@@ -374,6 +430,15 @@
         padding: 1.5rem;
       }
 
+      .progress-container {
+        padding: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .progress-header {
+        font-size: 0.8rem;
+      }
+
       .section-title {
         font-size: 1.5rem;
       }
@@ -568,11 +633,23 @@
         <div class="time-notice">
           <strong><i class="fas fa-clock"></i>Time Estimate</strong>
           Make sure to set aside 10 to 15mins to complete this test
+          <br><span style="font-size: 0.9rem; opacity: 0.9;"><i class="fas fa-list"></i> 41 questions total</span>
         </div>
       </div>
 
       <!-- Form -->
       <div class="form-container">
+        <!-- Progress Bar -->
+        <div class="progress-container">
+          <div class="progress-header">
+            <span>Progress</span>
+            <span class="progress-text">Step <span id="currentStepDisplay">1</span> of <span id="totalStepsDisplay">8</span></span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 12.5%;"></div>
+          </div>
+        </div>
+        
         <form id="addictionTestForm">
           <!-- Section I: Who Are You -->
           <div class="form-step active" data-step="1">
@@ -1575,6 +1652,28 @@
           activeStep.classList.add('active');
         }
       }, 50);
+      
+      // Update progress bar
+      updateProgressBar();
+    }
+
+    function updateProgressBar() {
+      const progressPercentage = (currentStep / totalSteps) * 100;
+      const progressFill = document.getElementById('progressFill');
+      const currentStepDisplay = document.getElementById('currentStepDisplay');
+      const totalStepsDisplay = document.getElementById('totalStepsDisplay');
+      
+      if (progressFill) {
+        progressFill.style.width = progressPercentage + '%';
+      }
+      
+      if (currentStepDisplay) {
+        currentStepDisplay.textContent = currentStep;
+      }
+      
+      if (totalStepsDisplay) {
+        totalStepsDisplay.textContent = totalSteps;
+      }
     }
 
     function validateForm() {
