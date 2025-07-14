@@ -1436,14 +1436,6 @@
       
       loadCountries();
       updateStepDisplay();
-      
-      // Form submission handler
-      // $('#addictionTestForm').on('submit', function(e) {
-      //   e.preventDefault();
-      //   if (validateForm()) {
-      //     // showSuccessMessage();
-      //   }
-      // });
     });
 
     $(document).on('click','.submit-btn',function(e){
@@ -1466,10 +1458,7 @@
         data: $(form).serialize(),
         success: function (response) {
           if (response.result == "success") {
-            // showSuccessMessage();
-            
-            $('.submit-btn').removeAttr('disabled');
-            $('.submit-btn').text('Submit Again');
+            showSuccessMessage();
           } else {
             Swal.fire({
               title: "Error!",
